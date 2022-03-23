@@ -1,5 +1,6 @@
 import 'package:rickandmorty_app/Characters/Models/character.dart';
 import 'package:http/http.dart' as http;
+import '../../api_config.dart';
 
 class CharacterViewModel {
   List<Character> characters = [];
@@ -18,20 +19,19 @@ class CharacterWorker extends CharacterWorkerInterface {
 
   @override
   List<Character> fetchCharacters() {
-    final response = repository.fetchCharacters();
     return [];
   }
 }
 
 abstract class CharacterRepositoryInterface {
-  Future<http.Response> fetchCharacters();
+  Future<Character> fetchCharacters();
 }
 
 class CharacterRepository extends CharacterRepositoryInterface {
   @override
-  Future<http.Response> fetchCharacters() async {
-    const baseURL = 'https://rickandmortyapi.com/api';
-    final response = await http.get(Uri.parse('${baseURL}/character'));
+  Future<Character> fetchCharacters() async {
+    final response = await http.get(Uri.parse('${APIConfig.apiURL}/character'));
+
     switch (response.statusCode) {
       case 200:
         print(response.body.toString());
@@ -42,18 +42,3 @@ class CharacterRepository extends CharacterRepositoryInterface {
     throw Exception('Failed to load characters');
   }
 }
-
-// Future<Album> fetchAlbum() async {
-//   final response = await http
-//       .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
-
-//   if (response.statusCode == 200) {
-//     // If the server did return a 200 OK response,
-//     // then parse the JSON.
-//     return Album.fromJson(jsonDecode(response.body));
-//   } else {
-//     // If the server did not return a 200 OK response,
-//     // then throw an exception.
-//     throw Exception('Failed to load album');
-//   }
-// }
