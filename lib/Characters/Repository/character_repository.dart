@@ -29,17 +29,6 @@ class CharacterRepository extends CharacterRepositoryInterface {
         final result = DataTransferReceiveCharacterResult.fromJson(
             jsonDecode(response.body));
         final characters = result.results
-            // .map((charResult) => Character(
-            //     charResult.id ?? 0,
-            //     charResult.name ?? '',
-            //     charResult.status ?? '',
-            //     charResult.species ?? '',
-            //     charResult.type ?? '',
-            //     charResult.gender ?? '',
-            //     charResult.image ?? '',
-            //     charResult.url ?? '',
-            //     charResult.created ?? ''))
-            // .toList();
             .map((charResult) => Character(
                 charResult.id ?? 0,
                 charResult.name ?? '',
@@ -50,8 +39,10 @@ class CharacterRepository extends CharacterRepositoryInterface {
                 charResult.image ?? '',
                 charResult.url ?? '',
                 charResult.created ?? '',
-                CharacterInfo('', ''),
-                CharacterInfo('', '')))
+                CharacterInfo(charResult.location!.name ?? '-',
+                    charResult.location!.url ?? ''),
+                CharacterInfo(charResult.origin!.name ?? '-',
+                    charResult.origin!.url ?? '')))
             .toList();
         return characters;
       default:

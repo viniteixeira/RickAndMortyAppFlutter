@@ -40,8 +40,8 @@ class _CharactersListState extends State<CharactersList> {
                 imageURL: char.image,
                 name: char.name,
                 stateAndRace: '${char.status} - ${char.species}',
-                lastLocation: 'Citadel of Ricks',
-                firstApparition: 'Earth (C-137)'))
+                lastLocation: char.location.name,
+                firstApparition: char.origin.name))
             .toList(),
       )),
     );

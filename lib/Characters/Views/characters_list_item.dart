@@ -28,32 +28,33 @@ class CharacterListItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: Image.network(imageURL, width: 156, height: 156),
             ),
-            Container(
-                child: Wrap(
-                  direction: Axis.vertical,
-                  spacing: 8,
-                  children: [
-                    Text(name,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16)),
-                    Text(stateAndRace,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 14)),
-                    const Text('Last known location:',
-                        style: TextStyle(color: Colors.grey, fontSize: 13)),
-                    Text(lastLocation,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 14)),
-                    const Text('First seen in:',
-                        style: TextStyle(color: Colors.grey, fontSize: 13)),
-                    Text(firstApparition,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 14)),
-                  ],
-                ),
-                margin: const EdgeInsets.fromLTRB(16, 8, 16, 8))
+            Flexible(
+                child: Container(
+                    child: Wrap(
+                      direction: Axis.vertical,
+                      spacing: 8,
+                      children: [
+                        Text(name,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16)),
+                        Text(stateAndRace,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 14)),
+                        const Text('Last known location:',
+                            style: TextStyle(color: Colors.grey, fontSize: 13)),
+                        Text(lastLocation,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 14)),
+                        const Text('First seen in:',
+                            style: TextStyle(color: Colors.grey, fontSize: 13)),
+                        Text(firstApparition,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 14)),
+                      ],
+                    ),
+                    margin: const EdgeInsets.fromLTRB(16, 8, 16, 8)))
           ],
         ),
         decoration: BoxDecoration(
