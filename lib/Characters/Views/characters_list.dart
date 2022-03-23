@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:rickandmorty_app/Characters/Models/character.dart';
+import 'package:rickandmorty_app/Characters/Repository/character_repository.dart';
+import 'package:rickandmorty_app/Characters/ViewModel/character_view_model.dart';
 import 'package:rickandmorty_app/extensions/extensions_colors.dart';
 import './characters_list_item.dart';
 
 class CharactersList extends StatefulWidget {
-  const CharactersList(
-      {Key? key, required this.title, required this.characters})
-      : super(key: key);
+  const CharactersList({Key? key, required this.title}) : super(key: key);
 
   final String title;
-  final List<Character> characters;
 
   @override
-  State<CharactersList> createState() => _CharactersListState(characters);
+  State<CharactersList> createState() => _CharactersListState();
 }
 
 class _CharactersListState extends State<CharactersList> {
-  _CharactersListState(this.characters);
+  CharacterViewModel viewModel = CharacterViewModel(CharacterRepository());
 
-  List<Character> characters;
+  @override
+  void initState() {
+    super.initState();
+    viewModel.getCharacters();
+
+    setState(() {
+      viewModel.characters;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +35,7 @@ class _CharactersListState extends State<CharactersList> {
       backgroundColor: AppColors.primaryColor,
       body: Center(
           child: ListView(
-        children: characters
+        children: viewModel.characters
             .map((char) => CharacterListItem(
                 imageURL: char.image,
                 name: char.name,

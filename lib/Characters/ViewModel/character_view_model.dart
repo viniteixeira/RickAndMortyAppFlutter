@@ -1,44 +1,20 @@
 import 'package:rickandmorty_app/Characters/Models/character.dart';
-import 'package:http/http.dart' as http;
-import '../../api_config.dart';
+import 'package:rickandmorty_app/Characters/Repository/character_repository.dart';
+import 'package:rickandmorty_app/Characters/Worker/character_worker.dart';
 
 class CharacterViewModel {
-  List<Character> characters = [];
-
-  getCharacters() {}
-}
-
-abstract class CharacterWorkerInterface {
-  CharacterWorkerInterface(this.repository);
-  CharacterRepositoryInterface repository;
-  List<Character> fetchCharacters();
-}
-
-class CharacterWorker extends CharacterWorkerInterface {
-  CharacterWorker(CharacterRepositoryInterface repository) : super(repository);
-
-  @override
-  List<Character> fetchCharacters() {
-    return [];
+  CharacterViewModel(CharacterRepository repository) {
+    worker = CharacterWorker(repository, this);
   }
-}
 
-abstract class CharacterRepositoryInterface {
-  Future<Character> fetchCharacters();
-}
+  List<Character> characters = [];
+  late CharacterWorkerInterface worker;
 
-class CharacterRepository extends CharacterRepositoryInterface {
-  @override
-  Future<Character> fetchCharacters() async {
-    final response = await http.get(Uri.parse('${APIConfig.apiURL}/character'));
+  getCharacters() {
+    worker.fetchCharacters();
+  }
 
-    switch (response.statusCode) {
-      case 200:
-        print(response.body.toString());
-        break;
-      default:
-        throw Exception('Failed to load album');
-    }
-    throw Exception('Failed to load characters');
+  fetchedCharacters(List<Character> characters) {
+    this.characters = characters;
   }
 }
